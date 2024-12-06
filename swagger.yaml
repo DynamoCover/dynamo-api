@@ -10,23 +10,11 @@ info:
   description: Dynamo API documentation for integrations
 security:
   - apiKey: []
-schemes:
-- 'https'
 paths:
   /pricing/breakdown:
     post:
       summary: Get breakdown prices
       description: ''
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-      - in: 'body'
-        name: 'body'
-        required: true
-        schema:
-          $ref: '#/definitions/BreakdownPricingRequest'
       responses:
         200:
           description: OK
@@ -35,7 +23,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/definitions/BreakdownPricingResponse'
+                  $ref: '#/components/schemas/BreakdownPricingResponse'
               examples:
                 European Vehicle Cover:
                   value:
@@ -86,34 +74,24 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/definitions/BadRequestResponse'
+                $ref: '#/components/schemas/BadRequestResponse'
         403:
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/definitions/InsufficientPermissionsResponse'
+                $ref: '#/components/schemas/InsufficientPermissionsResponse'
 
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/definitions/BreakdownPricingRequest'
+              $ref: '#/components/schemas/BreakdownPricingRequest'
 
   # /pricing/gadget:
   #   post:
   #     summary: Get gadget prices
   #     description: ''
-  #     consumes:
-  #       - application/json
-  #     produces:
-  #       - application/json
-  #     parameters:
-  #     - in: 'body'
-  #       name: 'body'
-  #       required: true
-  #       schema:
-  #         $ref: '#/definitions/GadgetPricingRequest'
   #     responses:
   #       200:
   #         description: OK
@@ -122,7 +100,7 @@ paths:
   #             schema:
   #               type: array
   #               items:
-  #                 $ref: '#/definitions/GadgetPricingResponse'
+  #                 $ref: '#/components/schemas/GadgetPricingResponse'
   #             examples:
   #               Gold:
   #                 value:
@@ -150,360 +128,358 @@ paths:
   #         content:
   #           application/json:
   #             schema:
-  #               $ref: '#/definitions/BadRequestResponse'
+  #               $ref: '#/components/schemas/BadRequestResponse'
   #       403:
   #         description: Forbidden
   #         content:
   #           application/json:
   #             schema:
-  #               $ref: '#/definitions/InsufficientPermissionsResponse'
+  #               $ref: '#/components/schemas/InsufficientPermissionsResponse'
 
   #     requestBody:
   #       content:
   #         application/json:
   #           schema:
-  #             $ref: '#/definitions/GadgetPricingRequest'
-
-
-definitions:
-  # Generic error responses
-  InsufficientPermissionsResponse:
-    type: 'object'
-    properties:
-      error:
-        type: object
-        properties:
-          code:
-            type: string
-            example: INSUFFICIENT_PERMISSIONS
-          message:
-            type: string
-            example: Invalid API Integration Token
-  BadRequestResponse:
-    type: 'object'
-    properties:
-      error:
-        type: object
-        properties:
-          code:
-            type: string
-            example: BAD_REQUEST
-          message:
-            type: string
-            example: Not a valid request
-          serializer_error:
-            type: object
-            properties:
-              field:
-                type: string
-                example: This field is required
-
-  # Breakdown pricing definitions
-  BreakdownPricingRequest:
-    type: 'object'
-    required:
-      - source
-      - first_name
-      - last_name
-      - email
-    properties:
-      affiliate_quote_id:
-        type: string
-        description: Affiliate Quote ID Reference.
-      source:
-        type: string
-        description: 'Source/Aggregator shortcode - i.e., `CTM` (Compare the Market), `QZ` (QuoteZone) etc.'
-      title:
-        type: string
-        description: 'Customer title - e.g., `MR`, `MRS`, `MISS`, `MS`, `DR`, `MX`.'
-      first_name:
-        type: string
-        description: Customers first name.
-      last_name:
-        type: string
-        description: Customers last name.
-      datebirth:
-        type: string
-        example: '1987-10-07'
-        description: Customers date of birth in the format `YYYY-MM-DD`.
-      address1:
-        type: string
-        description: Customers first line of address.
-      address2:
-        type: string
-        description: Customers second line of address.
-      city:
-        type: string
-        description: Customers city.
-      postcode:
-        type: string
-        description: Customers postcode.
-      email:
-        type: string
-        example: johndoe@email.com
-        description: Customers email address.
-      start_date:
-        type: string
-        default: today
-        example: '2025-01-01'
-        description: Policy start date in the format 'YYYY-MM-DD'.
-      # end_date:
-      #   type: string
-      #   example: '2026-01-01'
-      #   description: Policy end date in the format `YYYY-MM-DD`
-      # term:
-      #   type: integer
-      #   default: 12
-      #   description: Policy term in months
-      personal:
-        type: boolean
-        example: false
-        description: Set to `true` for personal breakdown prices.
-      vehicle:
-        type: boolean
-        example: true
-        description: Set to `true` for vehicle breakdown prices. When set to `true`, `reg_number` and `manufacture_date` are required.
-      local:
-        type: boolean
-        example: true
-        description: Set to `true` for breakdown prices with local cover.
-      national:
-        type: boolean
-        example: true
-        description: Set to `true` for breakdown prices with national cover.
-      european:
-        type: boolean
-        example: true
-        description: Set to `true` for breakdown prices with European cover.
-      onward_journey:
-        type: boolean
-        example: true
-        description: Set to `true` for breakdown prices that include onward journey.
-      home_start:
-        type: boolean
-        example: true
-        description: Set to `true` for breakdown prices that include home start.
-      misfuelling:
-        type: boolean
-        example: true
-        description: Set to `true` for breakdown prices that include misfuelling.
-      reg_number:
-        type: string
-        example: BT69YVC
-        description: Vehicle registration number. Required when `vehicle` is set to `true`.
-      make:
-        type: string
-        example: VOLKSWAGEN
-        description: Vehicle make. Required when `vehicle` is set to `true`.
-      model:
-        type: string
-        example: GOLF
-        description: Vehicle model. Required when `vehicle` is set to `true`.
-      reg_date:
-        type: string
-        example: '2019-12-01'
-        description: Vehickle registration date in the format `YYYY-MM-DD`.
-      manufacture_date:
-        type: string
-        example: '2019-12-01'
-        description: Vehicle manufacture date in the format `YYYY-MM-DD`. Required when `vehicle` is set to `true`.
-      colour:
-        type: string
-        example: GREY
-        description: Vehicle colour.
-      engine_size:
-        type: integer
-        example: 1498
-        description: Vehicle engine size.
-      fuel_type:
-        type: string
-        example: PETROL
-        description: Vehicle fuel type.
-      transmission_type:
-        type: string
-        example: AUTOMATIC
-        description: Vehicle transmission type.
-      doors:
-        type: integer
-        example: 5
-        description: Number of vehicle doors.
-  BreakdownPricingResponse:
-    type: 'object'
-    properties:
-      deeplink:
-        type: string
-        example: 'https://myaccount.dynamocover.com/quote/breakdown/d668f522-4b86-4470-bf4d-9173e802ef4d'
-      name:
-        type: string
-        example: Gold
-      price:
-        type: number
-        example: 30.00
-      excess:
-        type: number
-        example: 15.00
-      personal:
-        type: boolean
-        example: false
-      vehicle:
-        type: boolean
-        example: true
-      local:
-        type: boolean
-        example: false
-      national:
-        type: boolean
-        example: true
-      european:
-        type: boolean
-        example: false
-      onward_journey:
-        type: boolean
-        example: true
-      home_start:
-        type: boolean
-        example: true
-      misfuelling:
-        type: boolean
-        example: true
-
-  # Gadget pricing definitions
-  Gadget:
-    type: 'object'
-    required:
-      - id
-      - purchase_date
-      - loss_cover
-      - purchase_condition
-    properties:
-      id:
-        type: integer
-        example: 1
-        description: Gadget ID from our gadget list
-      purchase_date:
-        type: string
-        example: '2025-01-01'
-        description: Gadget purchase date in the format `YYYY-MM-DD`.
-      loss_cover:
-        type: boolean
-        example: true
-        description: Set to `true` for loss cover.
-      purchase_condition:
-        type: string
-        example: NEW
-        description: Gadget purchase condition - i.e., `NEW`, `REFURBISHED`, `USED`.
-  GadgetPricingRequest:
-    type: 'object'
-    required:
-      - source
-      - first_name
-      - last_name
-      - email
-      - gadgets
-    properties:
-      affiliate_quote_id:
-        type: string
-        description: Affiliate Quote ID Reference.
-      source:
-        type: string
-        example: CTM
-        description: 'Source/Aggregator shortcode - i.e., `CTM` (Compare the Market), `QZ` (QuoteZone) etc.'
-      title:
-        type: string
-        example: MR
-        description: 'Customer title - e.g., `MR`, `MRS`, `MISS`, `MS`, `DR`, `MX`.'
-      first_name:
-        type: string
-        example: John
-        description: Customers first name.
-      last_name:
-        type: string
-        example: Doe
-        description: Customers last name.
-      datebirth:
-        type: string
-        example: '1987-10-07'
-        description: Customers date of birth in the format `YYYY-MM-DD`.
-      address1:
-        type: string
-        example: 'The Business Centre, Cardiff House'
-        description: Customers first line of address.
-      address2:
-        type: string
-        example: 'Priority Business Park'
-        description: Customers second line of address.
-      city:
-        type: string
-        example: 'BARRY'
-        description: Customers city.
-      postcode:
-        type: string
-        example: 'CF632AW'
-        description: Customers postcode.
-      email:
-        type: string
-        example: johndoe@email.com
-        description: Customers email address.
-      start_date:
-        type: string
-        default: today
-        example: '2025-01-01'
-        description: Policy start date in the format 'YYYY-MM-DD'.
-      # end_date:
-      #   type: string
-      #   example: '2026-01-01'
-      #   description: Policy end date in the format `YYYY-MM-DD`
-      # term:
-      #   type: integer
-      #   default: 12
-      #   description: Policy term in months
-      accidental_damage_cover:
-        type: boolean
-        example: true
-        description: Set to `true` for accidental damage cover.
-      theft_cover:
-        type: boolean
-        example: true
-        description: Set to `true` for theft cover.
-      instant_cover:
-        type: boolean
-        example: true
-        description: Set to `true` for instant cover.
-      gadgets:
-        type: array
-        items:
-          $ref: '#/definitions/Gadget'
-
-  GadgetPricingResponse:
-    type: 'object'
-    properties:
-      deeplink:
-        type: string
-        example: 'https://myaccount.dynamocover.com/quote/gadget/d668f522-4b86-4470-bf4d-9173e802ef4d'
-      name:
-        type: string
-        example: Gold XS
-      price:
-        type: number
-        example: 53.08
-      excess:
-        type: number
-        example: 25.00
-      accidental_damage_cover:
-        type: boolean
-        example: true
-      theft_cover:
-        type: boolean
-        example: true
-      instant_cover:
-        type: boolean
-        example: true
-      breakdown_cover:
-        type: boolean
-        example: true
+  #             $ref: '#/components/schemas/GadgetPricingRequest'
 
 components:
-  schemas: {}
+  schemas:
+    # Generic error responses
+    InsufficientPermissionsResponse:
+      type: 'object'
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: INSUFFICIENT_PERMISSIONS
+            message:
+              type: string
+              example: Invalid API Integration Token
+    BadRequestResponse:
+      type: 'object'
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: BAD_REQUEST
+            message:
+              type: string
+              example: Not a valid request
+            serializer_error:
+              type: object
+              properties:
+                field:
+                  type: string
+                  example: This field is required
+  
+    # Breakdown pricing schemas
+    BreakdownPricingRequest:
+      type: 'object'
+      required:
+        - source
+        - first_name
+        - last_name
+        - email
+      properties:
+        affiliate_quote_id:
+          type: string
+          description: Affiliate Quote ID Reference.
+        source:
+          type: string
+          description: 'Source/Aggregator shortcode - i.e., `CTM` (Compare the Market), `QZ` (QuoteZone) etc.'
+        title:
+          type: string
+          description: 'Customer title - e.g., `MR`, `MRS`, `MISS`, `MS`, `DR`, `MX`.'
+        first_name:
+          type: string
+          description: Customers first name.
+        last_name:
+          type: string
+          description: Customers last name.
+        datebirth:
+          type: string
+          example: '1987-10-07'
+          description: Customers date of birth in the format `YYYY-MM-DD`.
+        address1:
+          type: string
+          description: Customers first line of address.
+        address2:
+          type: string
+          description: Customers second line of address.
+        city:
+          type: string
+          description: Customers city.
+        postcode:
+          type: string
+          description: Customers postcode.
+        email:
+          type: string
+          example: johndoe@email.com
+          description: Customers email address.
+        start_date:
+          type: string
+          default: today
+          example: '2025-01-01'
+          description: Policy start date in the format 'YYYY-MM-DD'.
+        # end_date:
+        #   type: string
+        #   example: '2026-01-01'
+        #   description: Policy end date in the format `YYYY-MM-DD`
+        # term:
+        #   type: integer
+        #   default: 12
+        #   description: Policy term in months
+        personal:
+          type: boolean
+          example: false
+          description: Set to `true` for personal breakdown prices.
+        vehicle:
+          type: boolean
+          example: true
+          description: Set to `true` for vehicle breakdown prices. When set to `true`, `reg_number` and `manufacture_date` are required.
+        local:
+          type: boolean
+          example: true
+          description: Set to `true` for breakdown prices with local cover.
+        national:
+          type: boolean
+          example: true
+          description: Set to `true` for breakdown prices with national cover.
+        european:
+          type: boolean
+          example: true
+          description: Set to `true` for breakdown prices with European cover.
+        onward_journey:
+          type: boolean
+          example: true
+          description: Set to `true` for breakdown prices that include onward journey.
+        home_start:
+          type: boolean
+          example: true
+          description: Set to `true` for breakdown prices that include home start.
+        misfuelling:
+          type: boolean
+          example: true
+          description: Set to `true` for breakdown prices that include misfuelling.
+        reg_number:
+          type: string
+          example: BT69YVC
+          description: Vehicle registration number. Required when `vehicle` is set to `true`.
+        make:
+          type: string
+          example: VOLKSWAGEN
+          description: Vehicle make. Required when `vehicle` is set to `true`.
+        model:
+          type: string
+          example: GOLF
+          description: Vehicle model. Required when `vehicle` is set to `true`.
+        reg_date:
+          type: string
+          example: '2019-12-01'
+          description: Vehickle registration date in the format `YYYY-MM-DD`.
+        manufacture_date:
+          type: string
+          example: '2019-12-01'
+          description: Vehicle manufacture date in the format `YYYY-MM-DD`. Required when `vehicle` is set to `true`.
+        colour:
+          type: string
+          example: GREY
+          description: Vehicle colour.
+        engine_size:
+          type: integer
+          example: 1498
+          description: Vehicle engine size.
+        fuel_type:
+          type: string
+          example: PETROL
+          description: Vehicle fuel type.
+        transmission_type:
+          type: string
+          example: AUTOMATIC
+          description: Vehicle transmission type.
+        doors:
+          type: integer
+          example: 5
+          description: Number of vehicle doors.
+    BreakdownPricingResponse:
+      type: 'object'
+      properties:
+        deeplink:
+          type: string
+          example: 'https://myaccount.dynamocover.com/quote/breakdown/d668f522-4b86-4470-bf4d-9173e802ef4d'
+        name:
+          type: string
+          example: Gold
+        price:
+          type: number
+          example: 30.00
+        excess:
+          type: number
+          example: 15.00
+        personal:
+          type: boolean
+          example: false
+        vehicle:
+          type: boolean
+          example: true
+        local:
+          type: boolean
+          example: false
+        national:
+          type: boolean
+          example: true
+        european:
+          type: boolean
+          example: false
+        onward_journey:
+          type: boolean
+          example: true
+        home_start:
+          type: boolean
+          example: true
+        misfuelling:
+          type: boolean
+          example: true
+  
+    # Gadget pricing schemas
+    Gadget:
+      type: 'object'
+      required:
+        - id
+        - purchase_date
+        - loss_cover
+        - purchase_condition
+      properties:
+        id:
+          type: integer
+          example: 1
+          description: Gadget ID from our gadget list
+        purchase_date:
+          type: string
+          example: '2025-01-01'
+          description: Gadget purchase date in the format `YYYY-MM-DD`.
+        loss_cover:
+          type: boolean
+          example: true
+          description: Set to `true` for loss cover.
+        purchase_condition:
+          type: string
+          example: NEW
+          description: Gadget purchase condition - i.e., `NEW`, `REFURBISHED`, `USED`.
+    GadgetPricingRequest:
+      type: 'object'
+      required:
+        - source
+        - first_name
+        - last_name
+        - email
+        - gadgets
+      properties:
+        affiliate_quote_id:
+          type: string
+          description: Affiliate Quote ID Reference.
+        source:
+          type: string
+          example: CTM
+          description: 'Source/Aggregator shortcode - i.e., `CTM` (Compare the Market), `QZ` (QuoteZone) etc.'
+        title:
+          type: string
+          example: MR
+          description: 'Customer title - e.g., `MR`, `MRS`, `MISS`, `MS`, `DR`, `MX`.'
+        first_name:
+          type: string
+          example: John
+          description: Customers first name.
+        last_name:
+          type: string
+          example: Doe
+          description: Customers last name.
+        datebirth:
+          type: string
+          example: '1987-10-07'
+          description: Customers date of birth in the format `YYYY-MM-DD`.
+        address1:
+          type: string
+          example: 'The Business Centre, Cardiff House'
+          description: Customers first line of address.
+        address2:
+          type: string
+          example: 'Priority Business Park'
+          description: Customers second line of address.
+        city:
+          type: string
+          example: 'BARRY'
+          description: Customers city.
+        postcode:
+          type: string
+          example: 'CF632AW'
+          description: Customers postcode.
+        email:
+          type: string
+          example: johndoe@email.com
+          description: Customers email address.
+        start_date:
+          type: string
+          default: today
+          example: '2025-01-01'
+          description: Policy start date in the format 'YYYY-MM-DD'.
+        # end_date:
+        #   type: string
+        #   example: '2026-01-01'
+        #   description: Policy end date in the format `YYYY-MM-DD`
+        # term:
+        #   type: integer
+        #   default: 12
+        #   description: Policy term in months
+        accidental_damage_cover:
+          type: boolean
+          example: true
+          description: Set to `true` for accidental damage cover.
+        theft_cover:
+          type: boolean
+          example: true
+          description: Set to `true` for theft cover.
+        instant_cover:
+          type: boolean
+          example: true
+          description: Set to `true` for instant cover.
+        gadgets:
+          type: array
+          items:
+            $ref: '#/components/schemas/Gadget'
+  
+    GadgetPricingResponse:
+      type: 'object'
+      properties:
+        deeplink:
+          type: string
+          example: 'https://myaccount.dynamocover.com/quote/gadget/d668f522-4b86-4470-bf4d-9173e802ef4d'
+        name:
+          type: string
+          example: Gold XS
+        price:
+          type: number
+          example: 53.08
+        excess:
+          type: number
+          example: 25.00
+        accidental_damage_cover:
+          type: boolean
+          example: true
+        theft_cover:
+          type: boolean
+          example: true
+        instant_cover:
+          type: boolean
+          example: true
+        breakdown_cover:
+          type: boolean
+          example: true
+
   securitySchemes:
     apiKey:
       name: Authorization
@@ -512,4 +488,3 @@ components:
       description: |-
         You need to prefix your api key with "Token ":
         Token {apiKey}
-  parameters: {}
