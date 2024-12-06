@@ -316,11 +316,9 @@ components:
           example: Gold
         price:
           type: number
-          format: float
           example: 30.00
         excess:
           type: number
-          format: float
           example: 15.00
         personal:
           type: boolean
