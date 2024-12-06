@@ -316,9 +316,11 @@ components:
           example: Gold
         price:
           type: number
+          format: float
           example: 30.00
         excess:
           type: number
+          format: float
           example: 15.00
         personal:
           type: boolean
@@ -345,140 +347,140 @@ components:
           type: boolean
           example: true
   
-    # Gadget pricing schemas
-    Gadget:
-      type: 'object'
-      required:
-        - id
-        - purchase_date
-        - loss_cover
-        - purchase_condition
-      properties:
-        id:
-          type: integer
-          example: 1
-          description: Gadget ID from our gadget list
-        purchase_date:
-          type: string
-          example: '2025-01-01'
-          description: Gadget purchase date in the format `YYYY-MM-DD`.
-        loss_cover:
-          type: boolean
-          example: true
-          description: Set to `true` for loss cover.
-        purchase_condition:
-          type: string
-          example: NEW
-          description: Gadget purchase condition - i.e., `NEW`, `REFURBISHED`, `USED`.
-    GadgetPricingRequest:
-      type: 'object'
-      required:
-        - source
-        - first_name
-        - last_name
-        - email
-        - gadgets
-      properties:
-        affiliate_quote_id:
-          type: string
-          description: Affiliate Quote ID Reference.
-        source:
-          type: string
-          example: CTM
-          description: 'Source/Aggregator shortcode - i.e., `CTM` (Compare the Market), `QZ` (QuoteZone) etc.'
-        title:
-          type: string
-          example: MR
-          description: 'Customer title - e.g., `MR`, `MRS`, `MISS`, `MS`, `DR`, `MX`.'
-        first_name:
-          type: string
-          example: John
-          description: Customers first name.
-        last_name:
-          type: string
-          example: Doe
-          description: Customers last name.
-        datebirth:
-          type: string
-          example: '1987-10-07'
-          description: Customers date of birth in the format `YYYY-MM-DD`.
-        address1:
-          type: string
-          example: 'The Business Centre, Cardiff House'
-          description: Customers first line of address.
-        address2:
-          type: string
-          example: 'Priority Business Park'
-          description: Customers second line of address.
-        city:
-          type: string
-          example: 'BARRY'
-          description: Customers city.
-        postcode:
-          type: string
-          example: 'CF632AW'
-          description: Customers postcode.
-        email:
-          type: string
-          example: johndoe@email.com
-          description: Customers email address.
-        start_date:
-          type: string
-          default: today
-          example: '2025-01-01'
-          description: Policy start date in the format 'YYYY-MM-DD'.
-        # end_date:
-        #   type: string
-        #   example: '2026-01-01'
-        #   description: Policy end date in the format `YYYY-MM-DD`
-        # term:
-        #   type: integer
-        #   default: 12
-        #   description: Policy term in months
-        accidental_damage_cover:
-          type: boolean
-          example: true
-          description: Set to `true` for accidental damage cover.
-        theft_cover:
-          type: boolean
-          example: true
-          description: Set to `true` for theft cover.
-        instant_cover:
-          type: boolean
-          example: true
-          description: Set to `true` for instant cover.
-        gadgets:
-          type: array
-          items:
-            $ref: '#/components/schemas/Gadget'
+    # # Gadget pricing schemas
+    # Gadget:
+    #   type: 'object'
+    #   required:
+    #     - id
+    #     - purchase_date
+    #     - loss_cover
+    #     - purchase_condition
+    #   properties:
+    #     id:
+    #       type: integer
+    #       example: 1
+    #       description: Gadget ID from our gadget list
+    #     purchase_date:
+    #       type: string
+    #       example: '2025-01-01'
+    #       description: Gadget purchase date in the format `YYYY-MM-DD`.
+    #     loss_cover:
+    #       type: boolean
+    #       example: true
+    #       description: Set to `true` for loss cover.
+    #     purchase_condition:
+    #       type: string
+    #       example: NEW
+    #       description: Gadget purchase condition - i.e., `NEW`, `REFURBISHED`, `USED`.
+    # GadgetPricingRequest:
+    #   type: 'object'
+    #   required:
+    #     - source
+    #     - first_name
+    #     - last_name
+    #     - email
+    #     - gadgets
+    #   properties:
+    #     affiliate_quote_id:
+    #       type: string
+    #       description: Affiliate Quote ID Reference.
+    #     source:
+    #       type: string
+    #       example: CTM
+    #       description: 'Source/Aggregator shortcode - i.e., `CTM` (Compare the Market), `QZ` (QuoteZone) etc.'
+    #     title:
+    #       type: string
+    #       example: MR
+    #       description: 'Customer title - e.g., `MR`, `MRS`, `MISS`, `MS`, `DR`, `MX`.'
+    #     first_name:
+    #       type: string
+    #       example: John
+    #       description: Customers first name.
+    #     last_name:
+    #       type: string
+    #       example: Doe
+    #       description: Customers last name.
+    #     datebirth:
+    #       type: string
+    #       example: '1987-10-07'
+    #       description: Customers date of birth in the format `YYYY-MM-DD`.
+    #     address1:
+    #       type: string
+    #       example: 'The Business Centre, Cardiff House'
+    #       description: Customers first line of address.
+    #     address2:
+    #       type: string
+    #       example: 'Priority Business Park'
+    #       description: Customers second line of address.
+    #     city:
+    #       type: string
+    #       example: 'BARRY'
+    #       description: Customers city.
+    #     postcode:
+    #       type: string
+    #       example: 'CF632AW'
+    #       description: Customers postcode.
+    #     email:
+    #       type: string
+    #       example: johndoe@email.com
+    #       description: Customers email address.
+    #     start_date:
+    #       type: string
+    #       default: today
+    #       example: '2025-01-01'
+    #       description: Policy start date in the format 'YYYY-MM-DD'.
+    #     # end_date:
+    #     #   type: string
+    #     #   example: '2026-01-01'
+    #     #   description: Policy end date in the format `YYYY-MM-DD`
+    #     # term:
+    #     #   type: integer
+    #     #   default: 12
+    #     #   description: Policy term in months
+    #     accidental_damage_cover:
+    #       type: boolean
+    #       example: true
+    #       description: Set to `true` for accidental damage cover.
+    #     theft_cover:
+    #       type: boolean
+    #       example: true
+    #       description: Set to `true` for theft cover.
+    #     instant_cover:
+    #       type: boolean
+    #       example: true
+    #       description: Set to `true` for instant cover.
+    #     gadgets:
+    #       type: array
+    #       items:
+    #         $ref: '#/components/schemas/Gadget'
   
-    GadgetPricingResponse:
-      type: 'object'
-      properties:
-        deeplink:
-          type: string
-          example: 'https://myaccount.dynamocover.com/quote/gadget/d668f522-4b86-4470-bf4d-9173e802ef4d'
-        name:
-          type: string
-          example: Gold XS
-        price:
-          type: number
-          example: 53.08
-        excess:
-          type: number
-          example: 25.00
-        accidental_damage_cover:
-          type: boolean
-          example: true
-        theft_cover:
-          type: boolean
-          example: true
-        instant_cover:
-          type: boolean
-          example: true
-        breakdown_cover:
-          type: boolean
-          example: true
+    # GadgetPricingResponse:
+    #   type: 'object'
+    #   properties:
+    #     deeplink:
+    #       type: string
+    #       example: 'https://myaccount.dynamocover.com/quote/gadget/d668f522-4b86-4470-bf4d-9173e802ef4d'
+    #     name:
+    #       type: string
+    #       example: Gold XS
+    #     price:
+    #       type: number
+    #       example: 53.08
+    #     excess:
+    #       type: number
+    #       example: 25.00
+    #     accidental_damage_cover:
+    #       type: boolean
+    #       example: true
+    #     theft_cover:
+    #       type: boolean
+    #       example: true
+    #     instant_cover:
+    #       type: boolean
+    #       example: true
+    #     breakdown_cover:
+    #       type: boolean
+    #       example: true
 
   securitySchemes:
     apiKey:
