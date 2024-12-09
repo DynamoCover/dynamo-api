@@ -8,8 +8,6 @@ info:
   version: 1.0.0
   title: Dynamo API
   description: Dynamo API documentation for integrations
-security:
-  - apiKey: []
 tags:
   - name: Pricing
     description: Get pricing for Dynamo products
@@ -19,7 +17,14 @@ paths:
       tags:
         - Pricing
       summary: Breakdown prices
-      description: ''
+      description: 'Fetches breakdown prices for vehicle or personal cover.'
+      parameters:
+        - name: Authorization
+          in: header
+          description: 'The `Authorization` header is used to authenticate with the API using your API key. Value is of the format `Token YOUR_API_KEY`.'
+          required: true
+          schema:
+            type: string
       responses:
         200:
           description: OK
@@ -98,7 +103,7 @@ paths:
   #     tags:
   #       - Pricing
   #     summary: Gadget prices
-  #     description: ''
+  #     description: 'Fetches gadget prices.'
   #     responses:
   #       200:
   #         description: OK
@@ -486,12 +491,3 @@ components:
     #     breakdown_cover:
     #       type: boolean
     #       example: true
-
-  securitySchemes:
-    apiKey:
-      name: Authorization
-      type: apiKey
-      in: header
-      description: |-
-        You need to prefix your api key with "Token ":
-        Token {apiKey}
