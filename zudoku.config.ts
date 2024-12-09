@@ -17,11 +17,12 @@ const config: ZudokuConfig = {
     files: "/pages/**/*.{md,mdx}",
   },
   page: {
-    logo: {src: {light: "/logo.svg", dark: "/logo.svg"}, alt: "Dynamo"},
+    logo: {src: {light: "https://myaccount.dynamocover.com/logo.svg", dark: "https://myaccount.dynamocover.com/logo.svg"}, alt: "Dynamo"},
   },
   metadata: {
     title: "Dynamo API",
     description: "Dynamo API documentation",
+    favicon: "https://myaccount.dynamocover.com/favicon.ico",
   }
 };
 
