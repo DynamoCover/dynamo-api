@@ -15,6 +15,13 @@ const config: ZudokuConfig = {
   docs: {
     files: "/pages/**/*.{md,mdx}",
   },
+  page: {
+    logo: {src: {light: "/logo.svg", dark: "/logo.svg"}, alt: "Dynamo"},
+  },
+  metadata: {
+    title: "Dynamo API",
+    description: "Dynamo API documentation",
+  }
 };
 
 export default config;
