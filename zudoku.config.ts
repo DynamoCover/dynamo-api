@@ -1,6 +1,7 @@
 import type { ZudokuConfig } from "zudoku";
 
 const config: ZudokuConfig = {
+  basePath: "/dynamo-api",
   topNavigation: [
     { id: "index", label: "Getting Started" },
     { id: "authentication", label: "Authentication" },
