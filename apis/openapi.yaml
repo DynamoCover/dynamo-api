@@ -10,10 +10,15 @@ info:
   description: Dynamo API documentation for integrations
 security:
   - apiKey: []
+tags:
+  - name: Pricing
+    description: Get pricing for Dynamo products
 paths:
   /pricing/breakdown:
     post:
-      summary: Get breakdown prices
+      tags:
+        - Pricing
+      summary: Breakdown prices
       description: ''
       responses:
         200:
@@ -90,7 +95,9 @@ paths:
 
   # /pricing/gadget:
   #   post:
-  #     summary: Get gadget prices
+  #     tags:
+  #       - Pricing
+  #     summary: Gadget prices
   #     description: ''
   #     responses:
   #       200:
