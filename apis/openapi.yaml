@@ -252,7 +252,7 @@ components:
         vehicle:
           type: boolean
           example: true
-          description: Set to `true` for vehicle breakdown prices. When set to `true`, `reg_number` and `manufacture_date` are required.
+          description: Set to `true` for vehicle breakdown prices. When set to `true`, `reg_number` and one of `reg_date`/`manufacture_date` is required.
         local:
           type: boolean
           example: true
@@ -292,11 +292,11 @@ components:
         reg_date:
           type: string
           example: '2019-12-01'
-          description: Vehickle registration date in the format `YYYY-MM-DD`.
+          description: Vehickle registration date in the format `YYYY-MM-DD`. This field or `manufacture_date` is required when `vehicle` is set to `true`
         manufacture_date:
           type: string
           example: '2019-12-01'
-          description: Vehicle manufacture date in the format `YYYY-MM-DD`. Required when `vehicle` is set to `true`.
+          description: Vehicle manufacture date in the format `YYYY-MM-DD`. This field or `reg_date` is required when `vehicle` is set to `true`. This field is preferred.
         colour:
           type: string
           example: GREY
