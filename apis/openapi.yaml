@@ -218,16 +218,16 @@ components:
           description: Customers date of birth in the format `YYYY-MM-DD`.
         address1:
           type: string
-          description: Customers first line of address.
+          description: Customers first line of address. When set, `city` and `postcode` is also required. 
         address2:
           type: string
-          description: Customers second line of address.
+          description: Customers second line of address. If no second line, set to null or omit field from request body. When set, `address1`, `city` and `postcode` is also required.
         city:
           type: string
-          description: Customers city.
+          description: Customers city. When set, `address1` and `postcode` is also required.
         postcode:
           type: string
-          description: Customers postcode.
+          description: Customers postcode. When set, `address1` and `city` is also required.
         email:
           type: string
           example: johndoe@email.com
@@ -252,7 +252,7 @@ components:
         vehicle:
           type: boolean
           example: true
-          description: Set to `true` for vehicle breakdown prices. When set to `true`, `reg_number` and one of `reg_date`/`manufacture_date` is required.
+          description: Set to `true` for vehicle breakdown prices. When set to `true`, `reg_number`, `make`, `model` and one of `reg_date`/`manufacture_date` is required.
         local:
           type: boolean
           example: true
@@ -292,7 +292,7 @@ components:
         reg_date:
           type: string
           example: '2019-12-01'
-          description: Vehickle registration date in the format `YYYY-MM-DD`. This field or `manufacture_date` is required when `vehicle` is set to `true`
+          description: Vehickle registration date in the format `YYYY-MM-DD`. This field or `manufacture_date` is required when `vehicle` is set to `true`.
         manufacture_date:
           type: string
           example: '2019-12-01'
