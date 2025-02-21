@@ -31,54 +31,64 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/BreakdownPricingResponse'
+                type: object
+                properties:
+                  object:
+                    type: string
+                    example: list
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BreakdownPricingResponse'
               examples:
                 European Vehicle Cover:
                   value:
-                    - id: 1
-                      deeplink: 'https://myaccount.dynamo.com/quote/breakdown/d668f522-4b86-4470-bf4d-9173e802ef4d'
-                      name: Gold
-                      price: 59.30
-                      excess: 0.00
-                      vehicle: true
-                      european: true
-                      onward_journey: true
-                      home_start: true
-                      misfuelling: true
-                    - id: 2
-                      deeplink: 'https://myaccount.dynamo.com/quote/breakdown/ca4b0387-bb70-47d4-baf7-f8de4da343f5'
-                      name: Gold XS
-                      price: 53.08
-                      excess: 25.00
-                      vehicle: true
-                      european: true
-                      onward_journey: true
-                      home_start: true
-                      misfuelling: true
+                    object: list
+                    data:
+                      - id: 1
+                        deeplink: 'https://myaccount.dynamo.com/quote/breakdown/d668f522-4b86-4470-bf4d-9173e802ef4d'
+                        name: Gold
+                        price: 59.30
+                        excess: 0.00
+                        vehicle: true
+                        european: true
+                        onward_journey: true
+                        home_start: true
+                        misfuelling: true
+                      - id: 2
+                        deeplink: 'https://myaccount.dynamo.com/quote/breakdown/ca4b0387-bb70-47d4-baf7-f8de4da343f5'
+                        name: Gold XS
+                        price: 53.08
+                        excess: 25.00
+                        vehicle: true
+                        european: true
+                        onward_journey: true
+                        home_start: true
+                        misfuelling: true
                 Personal Cover:
                   value:
-                    - id: 1
-                      deeplink: 'https://myaccount.dynamo.com/quote/breakdown/0a72b2b1-9e51-4bbe-93a6-b83e1f993d3a'
-                      name: Personal Breakdown
-                      price: 79.81
-                      excess: 0.00
-                      personal: true
-                      national: true
-                      onward_journey: true
-                      home_start: true
-                      misfuelling: true
-                    - id: 2
-                      deeplink: 'https://myaccount.dynamo.com/quote/breakdown/beff5081-8d14-419a-babb-0d28067cc915'
-                      name: Personal Breakdown XS
-                      price: 66.96
-                      excess: 25.00
-                      personal: true
-                      national: true
-                      onward_journey: true
-                      home_start: true
-                      misfuelling: true
+                    object: list
+                    data:
+                      - id: 1
+                        deeplink: 'https://myaccount.dynamo.com/quote/breakdown/0a72b2b1-9e51-4bbe-93a6-b83e1f993d3a'
+                        name: Personal Breakdown
+                        price: 79.81
+                        excess: 0.00
+                        personal: true
+                        national: true
+                        onward_journey: true
+                        home_start: true
+                        misfuelling: true
+                      - id: 2
+                        deeplink: 'https://myaccount.dynamo.com/quote/breakdown/beff5081-8d14-419a-babb-0d28067cc915'
+                        name: Personal Breakdown XS
+                        price: 66.96
+                        excess: 25.00
+                        personal: true
+                        national: true
+                        onward_journey: true
+                        home_start: true
+                        misfuelling: true
         400:
           description: Bad Request
           content:
@@ -110,31 +120,39 @@ paths:
   #         content:
   #           application/json:
   #             schema:
-  #               type: array
-  #               items:
-  #                 $ref: '#/components/schemas/GadgetPricingResponse'
+  #               type: object
+  #               properties:
+  #                 object:
+  #                   type: string
+  #                   example: list
+  #                 data:
+  #                   type: array
+  #                   items:
+  #                     $ref: '#/components/schemas/GadgetPricingResponse'
   #             examples:
   #               Gold:
   #                 value:
-  #                   - id: 1
-  #                     deeplink: 'https://myaccount.dynamo.com/quote/gadget/d668f522-4b86-4470-bf4d-9173e802ef4d'
-  #                     name: Gold
-  #                     price: 59.30
-  #                     excess: 0.00
-  #                     accidental_damage: true
-  #                     theft_cover: true
-  #                     instant_cover: true
-  #                     breakdown_cover: true
-                      
-  #                   - id: 2
-  #                     deeplink: 'https://myaccount.dynamo.com/quote/gadget/ca4b0387-bb70-47d4-baf7-f8de4da343f5'
-  #                     name: Gold XS
-  #                     price: 53.08
-  #                     excess: 25.00
-  #                     accidental_damage: true
-  #                     theft_cover: true
-  #                     instant_cover: true
-  #                     breakdown_cover: true
+  #                   object: list
+  #                   data:
+  #                     - id: 1
+  #                       deeplink: 'https://myaccount.dynamo.com/quote/gadget/d668f522-4b86-4470-bf4d-9173e802ef4d'
+  #                       name: Gold
+  #                       price: 59.30
+  #                       excess: 0.00
+  #                       accidental_damage: true
+  #                       theft_cover: true
+  #                       instant_cover: true
+  #                       breakdown_cover: true
+                        
+  #                     - id: 2
+  #                       deeplink: 'https://myaccount.dynamo.com/quote/gadget/ca4b0387-bb70-47d4-baf7-f8de4da343f5'
+  #                       name: Gold XS
+  #                       price: 53.08
+  #                       excess: 25.00
+  #                       accidental_damage: true
+  #                       theft_cover: true
+  #                       instant_cover: true
+  #                       breakdown_cover: true
   #       400:
   #         description: Bad Request
   #         content:
