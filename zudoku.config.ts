@@ -8,11 +8,11 @@ const config: ZudokuConfig = {
     { id: "api", label: "API Reference" },
   ],
   redirects: [{ from: "/", to: "/index" }],
-  apis: {
+  apis: [{
     type: "file",
     input: "./apis/openapi.yaml",
     navigationId: "api",
-  },
+  }],
   docs: {
     files: "/pages/**/*.{md,mdx}",
   },

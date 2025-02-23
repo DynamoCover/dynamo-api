@@ -108,69 +108,90 @@ paths:
             schema:
               $ref: '#/components/schemas/BreakdownPricingRequest'
 
-  # /pricing/gadget:
-  #   post:
-  #     tags:
-  #       - Pricing
-  #     summary: Gadget prices
-  #     description: 'Fetches gadget prices.'
-  #     responses:
-  #       200:
-  #         description: OK
-  #         content:
-  #           application/json:
-  #             schema:
-  #               type: object
-  #               properties:
-  #                 object:
-  #                   type: string
-  #                   example: list
-  #                 data:
-  #                   type: array
-  #                   items:
-  #                     $ref: '#/components/schemas/GadgetPricingResponse'
-  #             examples:
-  #               Gold:
-  #                 value:
-  #                   object: list
-  #                   data:
-  #                     - id: 1
-  #                       deeplink: 'https://myaccount.dynamo.com/quote/gadget/d668f522-4b86-4470-bf4d-9173e802ef4d'
-  #                       name: Gold
-  #                       price: 59.30
-  #                       excess: 0.00
-  #                       accidental_damage: true
-  #                       theft_cover: true
-  #                       instant_cover: true
-  #                       breakdown_cover: true
+  /pricing/gadget:
+    post:
+      tags:
+        - Pricing
+      summary: Gadget prices
+      description: 'Fetches gadget prices.'
+      parameters:
+        - name: Authorization
+          in: header
+          description: 'The `Authorization` header is used to authenticate with the API using your API key. Value is of the format `Token YOUR_API_KEY`.'
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    example: list
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GadgetPricingResponse'
+              examples:
+                Gold:
+                  value:
+                    object: list
+                    data:
+                      - id: 1
+                        deeplink: 'https://myaccount.dynamo.com/quote/gadget/d668f522-4b86-4470-bf4d-9173e802ef4d'
+                        name: Gold
+                        annual_price: 59.30
+                        monthly_price: 5.93
+                        # excess_min_accidental_damage: 0.00
+                        # excess_max_accidental_damage: 0.00
+                        # excess_min_breakdown: 0.00
+                        # excess_max_breakdown: 0.00
+                        # excess_min_theft: 0.00
+                        # excess_max_theft: 0.00
+                        excess: 0.00
+                        accidental_damage_cover: true
+                        theft_cover: true
+                        instant_cover: true
+                        breakdown_cover: true
                         
-  #                     - id: 2
-  #                       deeplink: 'https://myaccount.dynamo.com/quote/gadget/ca4b0387-bb70-47d4-baf7-f8de4da343f5'
-  #                       name: Gold XS
-  #                       price: 53.08
-  #                       excess: 25.00
-  #                       accidental_damage: true
-  #                       theft_cover: true
-  #                       instant_cover: true
-  #                       breakdown_cover: true
-  #       400:
-  #         description: Bad Request
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/BadRequestResponse'
-  #       403:
-  #         description: Forbidden
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/InsufficientPermissionsResponse'
+                      - id: 2
+                        deeplink: 'https://myaccount.dynamo.com/quote/gadget/ca4b0387-bb70-47d4-baf7-f8de4da343f5'
+                        name: Gold XS
+                        annual_price: 53.08
+                        monthly_price: 5.31
+                        # excess_min_accidental_damage: 25.00
+                        # excess_max_accidental_damage: 25.00
+                        # excess_min_breakdown: 25.00
+                        # excess_max_breakdown: 25.00
+                        # excess_min_theft: 25.00
+                        # excess_max_theft: 25.00
+                        excess: 25.00
+                        accidental_damage_cover: true
+                        theft_cover: true
+                        instant_cover: true
+                        breakdown_cover: true
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InsufficientPermissionsResponse'
 
-  #     requestBody:
-  #       content:
-  #         application/json:
-  #           schema:
-  #             $ref: '#/components/schemas/GadgetPricingRequest'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GadgetPricingRequest'
 
 components:
   schemas:
@@ -215,41 +236,15 @@ components:
         - last_name
         - email
       properties:
+        source:
+          type: string
+          example: CTM
+          description: 'Source/Aggregator shortcode - i.e., `CTM` (Compare the Market), `QZ` (QuoteZone) etc.'
         affiliate_quote_id:
           type: string
           description: Affiliate Quote ID Reference.
-        source:
-          type: string
-          description: 'Source/Aggregator shortcode - i.e., `CTM` (Compare the Market), `QZ` (QuoteZone) etc.'
-        title:
-          type: string
-          description: 'Customer title - e.g., `MR`, `MRS`, `MISS`, `MS`, `DR`, `MX`.'
-        first_name:
-          type: string
-          description: Customers first name.
-        last_name:
-          type: string
-          description: Customers last name.
-        datebirth:
-          type: string
-          example: '1987-10-07'
-          description: Customers date of birth in the format `YYYY-MM-DD`.
-        address1:
-          type: string
-          description: Customers first line of address. When set, `city` and `postcode` is also required. 
-        address2:
-          type: string
-          description: Customers second line of address. If no second line, set to null or omit field from request body. When set, `address1`, `city` and `postcode` is also required.
-        city:
-          type: string
-          description: Customers city. When set, `address1` and `postcode` is also required.
-        postcode:
-          type: string
-          description: Customers postcode. When set, `address1` and `city` is also required.
-        email:
-          type: string
-          example: johndoe@email.com
-          description: Customers email address.
+
+        # Policy details 
         start_date:
           type: string
           default: today
@@ -263,6 +258,46 @@ components:
         #   type: integer
         #   default: 12
         #   description: Policy term in months
+
+        # Customer details
+        email:
+          type: string
+          example: johndoe@email.com
+          description: Customers email address.
+        title:
+          type: string
+          example: MR
+          description: 'Customer title - e.g., `MR`, `MRS`, `MISS`, `MS`, `DR`, `MX`.'
+        first_name:
+          type: string
+          example: John
+          description: Customers first name.
+        last_name:
+          type: string
+          example: Doe
+          description: Customers last name.
+        datebirth:
+          type: string
+          example: '1987-10-07'
+          description: Customers date of birth in the format `YYYY-MM-DD`.
+        address1:
+          type: string
+          example: 'The Business Centre, Cardiff House'
+          description: Customers first line of address. When set, `city` and `postcode` is also required. 
+        address2:
+          type: string
+          example: 'Priority Business Park'
+          description: Customers second line of address. If no second line, set to null or omit field from request body. When set, `address1`, `city` and `postcode` is also required.
+        city:
+          type: string
+          example: 'BARRY'
+          description: Customers city. When set, `address1` and `postcode` is also required.
+        postcode:
+          type: string
+          example: 'CF632AW'
+          description: Customers postcode. When set, `address1` and `city` is also required.
+
+        # Product flags
         personal:
           type: boolean
           example: false
@@ -295,18 +330,15 @@ components:
           type: boolean
           example: true
           description: Set to `true` for breakdown prices that include misfuelling.
+
+        # Vehicles
+        # vehicles:
+        #   schema:
+        #     $ref: '#/components/schemas/Vehicle'
         reg_number:
           type: string
           example: BT69YVC
           description: Vehicle registration number. Required when `vehicle` is set to `true`.
-        make:
-          type: string
-          example: VOLKSWAGEN
-          description: Vehicle make. Required when `vehicle` is set to `true`.
-        model:
-          type: string
-          example: GOLF
-          description: Vehicle model. Required when `vehicle` is set to `true`.
         reg_date:
           type: string
           example: '2019-12-01'
@@ -315,10 +347,14 @@ components:
           type: string
           example: '2019-12-01'
           description: Vehicle manufacture date in the format `YYYY-MM-DD`. This field or `reg_date` is required when `vehicle` is set to `true`. This field is preferred.
-        colour:
+        make:
           type: string
-          example: GREY
-          description: Vehicle colour.
+          example: VOLKSWAGEN
+          description: Vehicle make. Required when `vehicle` is set to `true`.
+        model:
+          type: string
+          example: GOLF
+          description: Vehicle model. Required when `vehicle` is set to `true`.
         engine_size:
           type: integer
           example: 1498
@@ -331,10 +367,15 @@ components:
           type: string
           example: AUTOMATIC
           description: Vehicle transmission type.
+        colour:
+          type: string
+          example: GREY
+          description: Vehicle colour.
         doors:
           type: integer
           example: 5
           description: Number of vehicle doors.
+
     BreakdownPricingResponse:
       type: 'object'
       properties:
@@ -375,137 +416,167 @@ components:
           type: boolean
           example: true
   
-    # # Gadget pricing schemas
-    # Gadget:
-    #   type: 'object'
-    #   required:
-    #     - id
-    #     - purchase_date
-    #     - loss_cover
-    #     - purchase_condition
-    #   properties:
-    #     id:
-    #       type: integer
-    #       example: 1
-    #       description: Gadget ID from our gadget list
-    #     purchase_date:
-    #       type: string
-    #       example: '2025-01-01'
-    #       description: Gadget purchase date in the format `YYYY-MM-DD`.
-    #     loss_cover:
-    #       type: boolean
-    #       example: true
-    #       description: Set to `true` for loss cover.
-    #     purchase_condition:
-    #       type: string
-    #       example: NEW
-    #       description: Gadget purchase condition - i.e., `NEW`, `REFURBISHED`, `USED`.
-    # GadgetPricingRequest:
-    #   type: 'object'
-    #   required:
-    #     - source
-    #     - first_name
-    #     - last_name
-    #     - email
-    #     - gadgets
-    #   properties:
-    #     affiliate_quote_id:
-    #       type: string
-    #       description: Affiliate Quote ID Reference.
-    #     source:
-    #       type: string
-    #       example: CTM
-    #       description: 'Source/Aggregator shortcode - i.e., `CTM` (Compare the Market), `QZ` (QuoteZone) etc.'
-    #     title:
-    #       type: string
-    #       example: MR
-    #       description: 'Customer title - e.g., `MR`, `MRS`, `MISS`, `MS`, `DR`, `MX`.'
-    #     first_name:
-    #       type: string
-    #       example: John
-    #       description: Customers first name.
-    #     last_name:
-    #       type: string
-    #       example: Doe
-    #       description: Customers last name.
-    #     datebirth:
-    #       type: string
-    #       example: '1987-10-07'
-    #       description: Customers date of birth in the format `YYYY-MM-DD`.
-    #     address1:
-    #       type: string
-    #       example: 'The Business Centre, Cardiff House'
-    #       description: Customers first line of address.
-    #     address2:
-    #       type: string
-    #       example: 'Priority Business Park'
-    #       description: Customers second line of address.
-    #     city:
-    #       type: string
-    #       example: 'BARRY'
-    #       description: Customers city.
-    #     postcode:
-    #       type: string
-    #       example: 'CF632AW'
-    #       description: Customers postcode.
-    #     email:
-    #       type: string
-    #       example: johndoe@email.com
-    #       description: Customers email address.
-    #     start_date:
-    #       type: string
-    #       default: today
-    #       example: '2025-01-01'
-    #       description: Policy start date in the format 'YYYY-MM-DD'.
-    #     # end_date:
-    #     #   type: string
-    #     #   example: '2026-01-01'
-    #     #   description: Policy end date in the format `YYYY-MM-DD`
-    #     # term:
-    #     #   type: integer
-    #     #   default: 12
-    #     #   description: Policy term in months
-    #     accidental_damage_cover:
-    #       type: boolean
-    #       example: true
-    #       description: Set to `true` for accidental damage cover.
-    #     theft_cover:
-    #       type: boolean
-    #       example: true
-    #       description: Set to `true` for theft cover.
-    #     instant_cover:
-    #       type: boolean
-    #       example: true
-    #       description: Set to `true` for instant cover.
-    #     gadgets:
-    #       type: array
-    #       items:
-    #         $ref: '#/components/schemas/Gadget'
+    # Gadget pricing schemas
+    Gadget:
+      type: 'object'
+      required:
+        - id
+        - purchase_date
+        - loss_cover
+        - purchase_condition
+      properties:
+        id:
+          type: integer
+          example: 1
+          description: Gadget ID from our gadget list. Ask your contact at Dynamo for the latest list.
+        purchase_date:
+          type: string
+          example: '2025-01-01'
+          description: Gadget purchase date in the format `YYYY-MM-DD`.
+        loss_cover:
+          type: boolean
+          example: true
+          description: Set to `true` for loss cover.
+        purchase_condition:
+          type: string
+          example: NEW
+          description: Gadget purchase condition - i.e., `NEW`, `REFURBISHED`, `SECOND_HAND`.
+    GadgetPricingRequest:
+      type: 'object'
+      required:
+        - source
+        - first_name
+        - last_name
+        - email
+        - gadgets
+      properties:
+        source:
+          type: string
+          example: CTM
+          description: 'Source/Aggregator shortcode - i.e., `CTM` (Compare the Market), `QZ` (QuoteZone) etc.'
+        affiliate_quote_id:
+          type: string
+          description: Affiliate Quote ID Reference.
+
+        # Policy details
+        start_date:
+          type: string
+          default: today
+          example: '2025-01-01'
+          description: Policy start date in the format 'YYYY-MM-DD'.
+        # end_date:
+        #   type: string
+        #   example: '2026-01-01'
+        #   description: Policy end date in the format `YYYY-MM-DD`
+        # term:
+        #   type: integer
+        #   default: 12
+        #   description: Policy term in months
+
+        # Customer details
+        email:
+          type: string
+          example: johndoe@email.com
+          description: Customers email address.
+        title:
+          type: string
+          example: MR
+          description: 'Customer title - e.g., `MR`, `MRS`, `MISS`, `MS`, `DR`, `MX`.'
+        first_name:
+          type: string
+          example: John
+          description: Customers first name.
+        last_name:
+          type: string
+          example: Doe
+          description: Customers last name.
+        datebirth:
+          type: string
+          example: '1987-10-07'
+          description: Customers date of birth in the format `YYYY-MM-DD`.
+        address1:
+          type: string
+          example: 'The Business Centre, Cardiff House'
+          description: Customers first line of address. When set, `city` and `postcode` is also required. 
+        address2:
+          type: string
+          example: 'Priority Business Park'
+          description: Customers second line of address. If no second line, set to null or omit field from request body. When set, `address1`, `city` and `postcode` is also required.
+        city:
+          type: string
+          example: 'BARRY'
+          description: Customers city. When set, `address1` and `postcode` is also required.
+        postcode:
+          type: string
+          example: 'CF632AW'
+          description: Customers postcode. When set, `address1` and `city` is also required.
+
+        # Product flags
+        accidental_damage_cover:
+          type: boolean
+          example: true
+          description: Set to `true` for accidental damage cover.
+        theft_cover:
+          type: boolean
+          example: true
+          description: Set to `true` for theft cover.
+        instant_cover:
+          type: boolean
+          example: true
+          description: Set to `true` for instant cover.
+
+        # Gadgets
+        gadgets:
+          description: "List of gadgets. Note: We only support 1 gadget per request at the moment."
+          type: array
+          items:
+            $ref: '#/components/schemas/Gadget'
   
-    # GadgetPricingResponse:
-    #   type: 'object'
-    #   properties:
-    #     deeplink:
-    #       type: string
-    #       example: 'https://myaccount.dynamocover.com/quote/gadget/d668f522-4b86-4470-bf4d-9173e802ef4d'
-    #     name:
-    #       type: string
-    #       example: Gold XS
-    #     price:
-    #       type: number
-    #       example: 53.08
-    #     excess:
-    #       type: number
-    #       example: 25.00
-    #     accidental_damage_cover:
-    #       type: boolean
-    #       example: true
-    #     theft_cover:
-    #       type: boolean
-    #       example: true
-    #     instant_cover:
-    #       type: boolean
-    #       example: true
-    #     breakdown_cover:
-    #       type: boolean
-    #       example: true
+    GadgetPricingResponse:
+      type: 'object'
+      properties:
+        deeplink:
+          type: string
+          example: 'https://myaccount.dynamocover.com/quote/gadget/d668f522-4b86-4470-bf4d-9173e802ef4d'
+        name:
+          type: string
+          example: Gold XS
+        annual_price:
+          type: number
+          example: 53.08
+        monthly_price:
+          type: number
+          example: 5.31
+        # excess_min_accidental_damage:
+        #   type: number
+        #   example: 25.00
+        # excess_max_accidental_damage:
+        #   type: number
+        #   example: 25.00
+        # excess_min_breakdown:
+        #   type: number
+        #   example: 25.00
+        # excess_max_breakdown:
+        #   type: number
+        #   example: 25.00
+        # excess_min_theft:
+        #   type: number
+        #   example: 25.00
+        # excess_max_theft:
+        #   type: number
+        #   example: 25.00
+        excess:
+          type: number
+          example: 25.00
+        accidental_damage_cover:
+          type: boolean
+          example: true
+        theft_cover:
+          type: boolean
+          example: true
+        instant_cover:
+          type: boolean
+          example: true
+        breakdown_cover:
+          type: boolean
+          example: true
