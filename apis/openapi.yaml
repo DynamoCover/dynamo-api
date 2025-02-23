@@ -527,8 +527,8 @@ components:
 
         # Gadgets
         gadgets:
-          description: "List of gadgets. Note: We only support 1 gadget per request at the moment."
           type: array
+          description: "List of gadgets. `NOTE - We only support 1 gadget per request at the moment.`"
           items:
             $ref: '#/components/schemas/Gadget'
   
