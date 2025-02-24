@@ -155,6 +155,7 @@ paths:
                         excess: 0.00
                         accidental_damage_cover: true
                         theft_cover: true
+                        loss_cover: true
                         instant_cover: true
                         breakdown_cover: true
                         
@@ -172,6 +173,7 @@ paths:
                         excess: 25.00
                         accidental_damage_cover: true
                         theft_cover: true
+                        loss_cover: true
                         instant_cover: true
                         breakdown_cover: true
         400:
@@ -524,6 +526,10 @@ components:
           type: boolean
           example: true
           description: Set to `true` for instant cover.
+        breakdown_cover:
+          type: boolean
+          example: true
+          description: Set to `true` for mechanical breakdown cover.
 
         # Gadgets
         gadgets:
@@ -572,6 +578,9 @@ components:
           type: boolean
           example: true
         theft_cover:
+          type: boolean
+          example: true
+        loss_cover:
           type: boolean
           example: true
         instant_cover:
