@@ -307,7 +307,7 @@ components:
         vehicle:
           type: boolean
           example: true
-          description: Set to `true` for vehicle breakdown prices. When set to `true`, `reg_number`, `make`, `model` and one of `reg_date`/`manufacture_date` is required.
+          description: Set to `true` for vehicle breakdown prices. When set to `true`, `reg_number`, `make`, `model` and one of `vehicle_age`/`reg_date`/`manufacture_date` is required.
         local:
           type: boolean
           example: true
@@ -337,6 +337,14 @@ components:
         # vehicles:
         #   schema:
         #     $ref: '#/components/schemas/Vehicle'
+        # vehicle_type:
+        #   type: string
+        #   example: CAR
+        #   description: Vehicle type - i.e., `CAR`, `VAN`, `BIKE`.
+        vehicle_age:
+          type: integer
+          example: 2
+          description: Vehicle age in years. This field, `reg_date` or `manufacture_date` is required when `vehicle` is set to `true`.
         reg_number:
           type: string
           example: BT69YVC
@@ -344,11 +352,11 @@ components:
         reg_date:
           type: string
           example: '2019-12-01'
-          description: Vehickle registration date in the format `YYYY-MM-DD`. This field or `manufacture_date` is required when `vehicle` is set to `true`.
+          description: Vehicle registration date in the format `YYYY-MM-DD`. This field, `manufacture_date` or `vehicle_age` is required when `vehicle` is set to `true`.
         manufacture_date:
           type: string
           example: '2019-12-01'
-          description: Vehicle manufacture date in the format `YYYY-MM-DD`. This field or `reg_date` is required when `vehicle` is set to `true`. This field is preferred.
+          description: Vehicle manufacture date in the format `YYYY-MM-DD`. This field, `reg_date` or `vehicle_age` is required when `vehicle` is set to `true`. This field is preferred.
         make:
           type: string
           example: VOLKSWAGEN
