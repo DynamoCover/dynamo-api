@@ -337,10 +337,10 @@ components:
         # vehicles:
         #   schema:
         #     $ref: '#/components/schemas/Vehicle'
-        # vehicle_type:
-        #   type: string
-        #   example: CAR
-        #   description: Vehicle type - i.e., `CAR`, `VAN`, `BIKE`.
+        vehicle_type:
+          type: string
+          example: CAR
+          description: Vehicle type - i.e., `CAR`, `VAN`, `BIKE`.
         vehicle_age:
           type: integer
           example: 2
