@@ -230,6 +230,64 @@ components:
                   example: This field is required
   
     # Breakdown pricing schemas
+    Vehicle:
+      type: 'object'
+      required:
+        - vehicle_age
+        - reg_number
+        - reg_date
+        - manufacture_date
+        - make
+        - model
+      properties:
+        vehicle_type:
+          type: string
+          example: CAR
+          description: Vehicle type - i.e., `CAR`, `VAN`, `BIKE`. Defaults to `CAR`.
+        vehicle_age:
+          type: integer
+          example: 2
+          description: Vehicle age in years. This field, `reg_date` or `manufacture_date` is required.
+        reg_number:
+          type: string
+          example: BT69YVC
+          description: Vehicle registration number.
+        reg_date:
+          type: string
+          example: '2019-12-01'
+          description: Vehicle registration date in the format `YYYY-MM-DD`. This field, `manufacture_date` or `vehicle_age` is required.
+        manufacture_date:
+          type: string
+          example: '2019-12-01'
+          description: Vehicle manufacture date in the format `YYYY-MM-DD`. This field, `reg_date` or `vehicle_age` is required. This field is preferred.
+        make:
+          type: string
+          example: VOLKSWAGEN
+          description: Vehicle make. Required.
+        model:
+          type: string
+          example: GOLF
+          description: Vehicle model. Required.
+        engine_size:
+          type: integer
+          example: 1498
+          description: Vehicle engine size.
+        fuel_type:
+          type: string
+          example: PETROL
+          description: Vehicle fuel type.
+        transmission_type:
+          type: string
+          example: AUTOMATIC
+          description: Vehicle transmission type.
+        colour:
+          type: string
+          example: GREY
+          description: Vehicle colour.
+        doors:
+          type: integer
+          example: 5
+          description: Number of vehicle doors.
     BreakdownPricingRequest:
       type: 'object'
       required:
@@ -307,7 +365,7 @@ components:
         vehicle:
           type: boolean
           example: true
-          description: Set to `true` for vehicle breakdown prices. When set to `true`, `reg_number`, `make`, `model` and one of `vehicle_age`/`reg_date`/`manufacture_date` is required.
+          description: Set to `true` for vehicle breakdown prices. When set to `true`, `vehicles` should contain at least one vehicle.
         local:
           type: boolean
           example: true
@@ -334,57 +392,71 @@ components:
           description: Set to `true` for breakdown prices that include misfuelling.
 
         # Vehicles
-        # vehicles:
-        #   schema:
-        #     $ref: '#/components/schemas/Vehicle'
+        vehicles:
+          type: array
+          description: "List of vehicles. `NOTE - We only support 1 vehicle per request at the moment.`"
+          items:
+            $ref: '#/components/schemas/Vehicle'
         vehicle_type:
           type: string
           example: CAR
-          description: Vehicle type - i.e., `CAR`, `VAN`, `BIKE`.
+          description: Vehicle type - i.e., `CAR`, `VAN`, `BIKE`. Defaults to `CAR`. DEPRECATED - Use `vehicles` instead.
+          deprecated: true
         vehicle_age:
           type: integer
           example: 2
-          description: Vehicle age in years. This field, `reg_date` or `manufacture_date` is required when `vehicle` is set to `true`.
+          description: Vehicle age in years. This field, `reg_date` or `manufacture_date` is required when `vehicle` is set to `true`. DEPRECATED - Use `vehicles` instead.
+          deprecated: true
         reg_number:
           type: string
           example: BT69YVC
-          description: Vehicle registration number. Required when `vehicle` is set to `true`.
+          description: Vehicle registration number. Required when `vehicle` is set to `true`. DEPRECATED - Use `vehicles` instead.
+          deprecated: true
         reg_date:
           type: string
           example: '2019-12-01'
-          description: Vehicle registration date in the format `YYYY-MM-DD`. This field, `manufacture_date` or `vehicle_age` is required when `vehicle` is set to `true`.
+          description: Vehicle registration date in the format `YYYY-MM-DD`. This field, `manufacture_date` or `vehicle_age` is required when `vehicle` is set to `true`. DEPRECATED - Use `vehicles` instead.
+          deprecated: true
         manufacture_date:
           type: string
           example: '2019-12-01'
-          description: Vehicle manufacture date in the format `YYYY-MM-DD`. This field, `reg_date` or `vehicle_age` is required when `vehicle` is set to `true`. This field is preferred.
+          description: Vehicle manufacture date in the format `YYYY-MM-DD`. This field, `reg_date` or `vehicle_age` is required when `vehicle` is set to `true`. This field is preferred. DEPRECATED - Use `vehicles` instead.
+          deprecated: true
         make:
           type: string
           example: VOLKSWAGEN
-          description: Vehicle make. Required when `vehicle` is set to `true`.
+          description: Vehicle make. Required when `vehicle` is set to `true`. DEPRECATED - Use `vehicles` instead.
+          deprecated: true
         model:
           type: string
           example: GOLF
-          description: Vehicle model. Required when `vehicle` is set to `true`.
+          description: Vehicle model. Required when `vehicle` is set to `true`. DEPRECATED - Use `vehicles` instead.
+          deprecated: true
         engine_size:
           type: integer
           example: 1498
-          description: Vehicle engine size.
+          description: Vehicle engine size. DEPRECATED - Use `vehicles` instead.
+          deprecated: true
         fuel_type:
           type: string
           example: PETROL
-          description: Vehicle fuel type.
+          description: Vehicle fuel type. DEPRECATED - Use `vehicles` instead.
+          deprecated: true
         transmission_type:
           type: string
           example: AUTOMATIC
-          description: Vehicle transmission type.
+          description: Vehicle transmission type. DEPRECATED - Use `vehicles` instead.
+          deprecated: true
         colour:
           type: string
           example: GREY
-          description: Vehicle colour.
+          description: Vehicle colour. DEPRECATED - Use `vehicles` instead.
+          deprecated: true
         doors:
           type: integer
           example: 5
-          description: Number of vehicle doors.
+          description: Number of vehicle doors. DEPRECATED - Use `vehicles` instead.
+          deprecated: true
 
     BreakdownPricingResponse:
       type: 'object'
