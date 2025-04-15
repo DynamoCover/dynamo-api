@@ -340,6 +340,10 @@ components:
           type: string
           example: '1987-10-07'
           description: Customers date of birth in the format `YYYY-MM-DD`.
+        phone_number:
+          type: string
+          example: '07780510828'
+          description: Customers phone number.
         address1:
           type: string
           example: 'The Business Centre, Cardiff House'
@@ -576,6 +580,10 @@ components:
           type: string
           example: '1987-10-07'
           description: Customers date of birth in the format `YYYY-MM-DD`.
+        phone_number:
+          type: string
+          example: '07780510828'
+          description: Customers phone number.
         address1:
           type: string
           example: 'The Business Centre, Cardiff House'
