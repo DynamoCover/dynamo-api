@@ -310,10 +310,10 @@ components:
           default: today
           example: '2025-01-01'
           description: Policy start date in the format 'YYYY-MM-DD'.
-        # end_date:
-        #   type: string
-        #   example: '2026-01-01'
-        #   description: Policy end date in the format `YYYY-MM-DD`
+        end_date:
+          type: string
+          example: '2026-01-01'
+          description: Policy end date in the format `YYYY-MM-DD`. When set, only single trip cover is returned.
         # term:
         #   type: integer
         #   default: 12
@@ -553,7 +553,7 @@ components:
         # end_date:
         #   type: string
         #   example: '2026-01-01'
-        #   description: Policy end date in the format `YYYY-MM-DD`
+        #   description: Policy end date in the format `YYYY-MM-DD`.
         # term:
         #   type: integer
         #   default: 12
