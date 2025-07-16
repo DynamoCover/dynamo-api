@@ -398,7 +398,7 @@ components:
         # Vehicles
         vehicles:
           type: array
-          description: "List of vehicles. `NOTE - We only support 1 vehicle per request at the moment.`"
+          description: "List of vehicles."
           items:
             $ref: '#/components/schemas/Vehicle'
         vehicle_type:
@@ -622,7 +622,7 @@ components:
         # Gadgets
         gadgets:
           type: array
-          description: "List of gadgets. `NOTE - We only support 1 gadget per request at the moment.`"
+          description: "List of gadgets."
           items:
             $ref: '#/components/schemas/Gadget'
   
