@@ -12,6 +12,23 @@ tags:
   - name: Pricing
     description: Get pricing for Dynamo products
 paths:
+  /healthcheck:
+    get:
+      tags:
+        - Healthcheck
+      summary: Healthcheck endpoint
+      description: 'Returns the status of the Dynamo API.'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: healthy
   /pricing/breakdown:
     post:
       tags:
@@ -49,6 +66,7 @@ paths:
                         deeplink: 'https://myaccount.dynamo.com/quote/breakdown/d668f522-4b86-4470-bf4d-9173e802ef4d'
                         name: Gold
                         price: 59.30
+                        discount: 10.70
                         excess: 0.00
                         vehicle: true
                         european: true
@@ -59,6 +77,7 @@ paths:
                         deeplink: 'https://myaccount.dynamo.com/quote/breakdown/ca4b0387-bb70-47d4-baf7-f8de4da343f5'
                         name: Gold XS
                         price: 53.08
+                        discount: 6.92
                         excess: 25.00
                         vehicle: true
                         european: true
@@ -73,6 +92,7 @@ paths:
                         deeplink: 'https://myaccount.dynamo.com/quote/breakdown/0a72b2b1-9e51-4bbe-93a6-b83e1f993d3a'
                         name: Personal Breakdown
                         price: 79.81
+                        discount: 10.19
                         excess: 0.00
                         personal: true
                         national: true
@@ -83,6 +103,7 @@ paths:
                         deeplink: 'https://myaccount.dynamo.com/quote/breakdown/beff5081-8d14-419a-babb-0d28067cc915'
                         name: Personal Breakdown XS
                         price: 66.96
+                        discount: 13.04
                         excess: 25.00
                         personal: true
                         national: true
@@ -145,7 +166,9 @@ paths:
                         deeplink: 'https://myaccount.dynamo.com/quote/gadget/d668f522-4b86-4470-bf4d-9173e802ef4d'
                         name: Gold
                         annual_price: 59.30
+                        annual_discount: 10.70
                         monthly_price: 5.93
+                        monthly_discount: 0.69
                         # excess_min_accidental_damage: 0.00
                         # excess_max_accidental_damage: 0.00
                         # excess_min_breakdown: 0.00
@@ -163,7 +186,9 @@ paths:
                         deeplink: 'https://myaccount.dynamo.com/quote/gadget/ca4b0387-bb70-47d4-baf7-f8de4da343f5'
                         name: Gold XS
                         annual_price: 53.08
+                        annual_discount: 7.00
                         monthly_price: 5.31
+                        monthly_discount: 0.69
                         # excess_min_accidental_damage: 25.00
                         # excess_max_accidental_damage: 25.00
                         # excess_min_breakdown: 25.00
@@ -474,6 +499,10 @@ components:
         price:
           type: number
           example: 30.00
+        discount:
+          type: number
+          example: 5.00
+          description: Introductory offer applied for the first year.
         excess:
           type: number
           example: 15.00
@@ -637,10 +666,18 @@ components:
           example: Gold XS
         annual_price:
           type: number
-          example: 53.08
+          example: 53.02
+        annual_discount:
+          type: number
+          example: 7.98
+          description: Introductory offer applied for the first year.
         monthly_price:
           type: number
           example: 5.31
+        monthly_discount:
+          type: number
+          example: 0.69
+          description: Introductory offer applied for the first month.
         # excess_min_accidental_damage:
         #   type: number
         #   example: 25.00
