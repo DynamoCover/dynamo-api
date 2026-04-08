@@ -1,6 +1,7 @@
 import type { ZudokuConfig } from "zudoku";
 
 const config: ZudokuConfig = {
+  basePath: "/dynamo-api",
   site: {
     logo: {
       src: { light: "/logo.svg", dark: "/logo.svg" },
