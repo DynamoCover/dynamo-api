@@ -803,6 +803,27 @@ components:
             - purchase_location
             - purchase_date
             - payment_method
+          properties:
+            value:
+              type: number
+              example: 22500.00
+              description: Vehicle value in GBP.
+            mileage:
+              type: integer
+              example: 15000
+              description: Vehicle mileage in miles.
+            purchase_location:
+              type: string
+              example: "DEALER"
+              description: Vehicle purchase location - i.e., `DEALER`, `PRIVATE`.
+            purchase_date:
+              type: string
+              example: "2025-01-01"
+              description: Vehicle purchase date in the format `YYYY-MM-DD`.
+            payment_method:
+              type: string
+              example: "HIRE_PURCHASE"
+              description: Vehicle payment method - i.e., `CASH`, `CONTRACT_HIRE`, `HIRE_PURCHASE`, `LEASE_PURCHASE`, `PERSONAL_CONTRACT_PURCHASE`, `PERSONAL_LOAN`, `PERSONAL_LEASE_PURCHASE`, `PERSONAL_CONTRACT_HIRE`, `LEASE_HIRE`.
 
     GapPricingRequest:
       type: "object"
