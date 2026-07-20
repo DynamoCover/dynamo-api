@@ -261,10 +261,10 @@ paths:
                         excess: 0.00
                         cover_level: 'Return to Invoice'
                         claim_limit: 22500.00
-                        settle_finance_agreements: true
+                        covers_outstanding_finance: true
                         covers_fitted_extras: true
                         covers_named_drivers: true
-                        theft_with_use_of_keys: true
+                        covers_theft_with_use_of_keys: true
         400:
           description: Bad Request
           content:
@@ -748,26 +748,23 @@ components:
         monthly_discount:
           type: number
           example: 0.69
-          description: Introductory offer applied for the first month.
-        # excess_min_accidental_damage:
-        #   type: number
-        #   example: 25.00
-        # excess_max_accidental_damage:
-        #   type: number
-        #   example: 25.00
-        # excess_min_breakdown:
-        #   type: number
-        #   example: 25.00
-        # excess_max_breakdown:
-        #   type: number
-        #   example: 25.00
-        # excess_min_theft:
-        #   type: number
-        #   example: 25.00
-        # excess_max_theft:
-        #   type: number
-        #   example: 25.00
-        excess:
+          description: Introductory offer applied for the first `monthly_discount_term` months.
+        excess_min_accidental_damage:
+          type: number
+          example: 25.00
+        excess_max_accidental_damage:
+          type: number
+          example: 25.00
+        excess_min_breakdown:
+          type: number
+          example: 25.00
+        excess_max_breakdown:
+          type: number
+          example: 25.00
+        excess_min_theft:
+          type: number
+          example: 25.00
+        excess_max_theft:
           type: number
           example: 25.00
         accidental_damage_cover:
@@ -824,6 +821,10 @@ components:
               type: string
               example: 'HIRE_PURCHASE'
               description: Vehicle payment method - i.e., `CASH`, `CONTRACT_HIRE`, `HIRE_PURCHASE`, `LEASE_PURCHASE`, `PERSONAL_CONTRACT_PURCHASE`, `PERSONAL_LOAN`, `PERSONAL_LEASE_PURCHASE`, `PERSONAL_CONTRACT_HIRE`, `LEASE_HIRE`.
+            first_time_owner:
+              type: boolean
+              example: true
+              description: Set to `true` if the customer is the first owner of the vehicle.
 
     GapPricingRequest:
       type: 'object'
@@ -895,7 +896,26 @@ components:
           description: Customers postcode. When set, `address1` and `city` is also required.
 
         # Product flags
-        # TODO: Add product flags for GAP pricing if needed
+        cover_level:
+          type: string
+          example: 'RETURN_TO_INVOICE'
+          description: GAP cover type - i.e., `COMBINED_RETURN_TO_INVOICE`, `RETURN_TO_INVOICE`, `RETURN_TO_VALUE`, `VEHICLE_REPLACEMENT`, `CONTRACT_HIRE`, `FINANCE_GAP`, use `null` or omit field to show all.
+        covers_outstanding_finance:
+          type: boolean
+          example: true
+          description: Set to `true` for gap prices that covers outstanding finance.
+        covers_fitted_extras:
+          type: boolean
+          example: true
+          description: Set to `true` for gap prices that covers fitted extras.
+        covers_named_drivers:
+          type: boolean
+          example: true
+          description: Set to `true` for gap prices that covers named drivers.
+        covers_theft_with_use_of_keys:
+          type: boolean
+          example: true
+          description: Set to `true` for gap prices that covers theft with use of keys.
 
         # Vehicles
         vehicles:
@@ -920,16 +940,27 @@ components:
           type: number
           example: 10.28
           description: Introductory offer applied for the first year.
+        monthly_price:
+          type: number
+          example: 10.70
+        monthly_discount:
+          type: number
+          example: 1.03
+          description: Introductory offer applied for the first `monthly_discount_term` months.
         excess:
           type: number
           example: 0.00
+        cover_term:
+          type: integer
+          example: 12
+          description: GAP cover term in months.
         cover_level:
           type: string
-          example: Return to Invoice
+          example: RETURN_TO_INVOICE
         claim_limit:
           type: number
           example: 22500.00
-        settle_finance_agreements:
+        covers_outstanding_finance:
           type: boolean
           example: true
         covers_fitted_extras:
@@ -938,6 +969,6 @@ components:
         covers_named_drivers:
           type: boolean
           example: true
-        theft_with_use_of_keys:
+        covers_theft_with_use_of_keys:
           type: boolean
           example: true
