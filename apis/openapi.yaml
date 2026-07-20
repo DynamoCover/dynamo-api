@@ -181,7 +181,7 @@ paths:
                         loss_cover: true
                         instant_cover: true
                         breakdown_cover: true
-                        
+
                       - id: 2
                         deeplink: 'https://myaccount.dynamo.com/quote/gadget/ca4b0387-bb70-47d4-baf7-f8de4da343f5'
                         name: Gold XS
@@ -220,6 +220,70 @@ paths:
             schema:
               $ref: '#/components/schemas/GadgetPricingRequest'
 
+  /pricing/gap:
+    post:
+      tags:
+        - Pricing
+      summary: GAP prices
+      description: 'Fetches GAP prices.'
+      parameters:
+        - name: Authorization
+          in: header
+          description: 'The `Authorization` header is used to authenticate with the API using your API key. Value is of the format `Token YOUR_API_KEY`.'
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    example: list
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GapPricingResponse'
+              examples:
+                GAP:
+                  value:
+                    object: list
+                    data:
+                      - id: 1
+                        deeplink: 'https://myaccount.dynamo.com/quote/gap/d668f522-4b86-4470-bf4d-9173e802ef4d'
+                        name: Dynamo GAP PPOV
+                        price: 107.00
+                        discount: 10.28
+                        excess: 0.00
+                        cover_level: 'Return to Invoice'
+                        claim_limit: 22500.00
+                        covers_outstanding_finance: true
+                        covers_fitted_extras: true
+                        covers_named_drivers: true
+                        covers_theft_with_use_of_keys: true
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InsufficientPermissionsResponse'
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GapPricingRequest'
+
 components:
   schemas:
     # Generic error responses
@@ -253,17 +317,9 @@ components:
                 field:
                   type: string
                   example: This field is required
-  
-    # Breakdown pricing schemas
+
     Vehicle:
       type: 'object'
-      required:
-        - vehicle_age
-        - reg_number
-        - reg_date
-        - manufacture_date
-        - make
-        - model
       properties:
         vehicle_type:
           type: string
@@ -313,6 +369,20 @@ components:
           type: integer
           example: 5
           description: Number of vehicle doors.
+
+    # Breakdown pricing schemas
+    BreakdownVehicle:
+      allOf:
+        - $ref: '#/components/schemas/Vehicle'
+        - type: 'object'
+          required:
+            - vehicle_age
+            - reg_number
+            - reg_date
+            - manufacture_date
+            - make
+            - model
+
     BreakdownPricingRequest:
       type: 'object'
       required:
@@ -329,7 +399,7 @@ components:
           type: string
           description: Affiliate Quote ID Reference.
 
-        # Policy details 
+        # Policy details
         start_date:
           type: string
           default: today
@@ -372,7 +442,7 @@ components:
         address1:
           type: string
           example: 'The Business Centre, Cardiff House'
-          description: Customers first line of address. When set, `city` and `postcode` is also required. 
+          description: Customers first line of address. When set, `city` and `postcode` is also required.
         address2:
           type: string
           example: 'Priority Business Park'
@@ -423,9 +493,9 @@ components:
         # Vehicles
         vehicles:
           type: array
-          description: "List of vehicles."
+          description: 'List of vehicles.'
           items:
-            $ref: '#/components/schemas/Vehicle'
+            $ref: '#/components/schemas/BreakdownVehicle'
         vehicle_type:
           type: string
           example: CAR
@@ -530,7 +600,7 @@ components:
         misfuelling:
           type: boolean
           example: true
-  
+
     # Gadget pricing schemas
     Gadget:
       type: 'object'
@@ -556,6 +626,7 @@ components:
           type: string
           example: NEW
           description: Gadget purchase condition - i.e., `NEW`, `REFURBISHED`, `SECOND_HAND`.
+
     GadgetPricingRequest:
       type: 'object'
       required:
@@ -616,7 +687,7 @@ components:
         address1:
           type: string
           example: 'The Business Centre, Cardiff House'
-          description: Customers first line of address. When set, `city` and `postcode` is also required. 
+          description: Customers first line of address. When set, `city` and `postcode` is also required.
         address2:
           type: string
           example: 'Priority Business Park'
@@ -651,10 +722,10 @@ components:
         # Gadgets
         gadgets:
           type: array
-          description: "List of gadgets."
+          description: 'List of gadgets.'
           items:
             $ref: '#/components/schemas/Gadget'
-  
+
     GadgetPricingResponse:
       type: 'object'
       properties:
@@ -677,26 +748,23 @@ components:
         monthly_discount:
           type: number
           example: 0.69
-          description: Introductory offer applied for the first month.
-        # excess_min_accidental_damage:
-        #   type: number
-        #   example: 25.00
-        # excess_max_accidental_damage:
-        #   type: number
-        #   example: 25.00
-        # excess_min_breakdown:
-        #   type: number
-        #   example: 25.00
-        # excess_max_breakdown:
-        #   type: number
-        #   example: 25.00
-        # excess_min_theft:
-        #   type: number
-        #   example: 25.00
-        # excess_max_theft:
-        #   type: number
-        #   example: 25.00
-        excess:
+          description: Introductory offer applied for the first `monthly_discount_term` months.
+        excess_min_accidental_damage:
+          type: number
+          example: 25.00
+        excess_max_accidental_damage:
+          type: number
+          example: 25.00
+        excess_min_breakdown:
+          type: number
+          example: 25.00
+        excess_max_breakdown:
+          type: number
+          example: 25.00
+        excess_min_theft:
+          type: number
+          example: 25.00
+        excess_max_theft:
           type: number
           example: 25.00
         accidental_damage_cover:
@@ -712,5 +780,195 @@ components:
           type: boolean
           example: true
         breakdown_cover:
+          type: boolean
+          example: true
+
+    # Gap pricing schemas
+    GapVehicle:
+      allOf:
+        - $ref: '#/components/schemas/Vehicle'
+        - type: 'object'
+          required:
+            - vehicle_age
+            - reg_number
+            - reg_date
+            - manufacture_date
+            - make
+            - model
+            - value
+            - mileage
+            - purchase_location
+            - purchase_date
+            - payment_method
+          properties:
+            value:
+              type: number
+              example: 22500.00
+              description: Vehicle value in GBP.
+            mileage:
+              type: integer
+              example: 15000
+              description: Vehicle mileage in miles.
+            purchase_location:
+              type: string
+              example: 'DEALER'
+              description: Vehicle purchase location - i.e., `DEALER`, `PRIVATE`.
+            purchase_date:
+              type: string
+              example: '2025-01-01'
+              description: Vehicle purchase date in the format `YYYY-MM-DD`.
+            payment_method:
+              type: string
+              example: 'HIRE_PURCHASE'
+              description: Vehicle payment method - i.e., `CASH`, `CONTRACT_HIRE`, `HIRE_PURCHASE`, `LEASE_PURCHASE`, `PERSONAL_CONTRACT_PURCHASE`, `PERSONAL_LOAN`, `PERSONAL_LEASE_PURCHASE`, `PERSONAL_CONTRACT_HIRE`, `LEASE_HIRE`.
+            first_time_owner:
+              type: boolean
+              example: true
+              description: Set to `true` if the customer is the first owner of the vehicle.
+
+    GapPricingRequest:
+      type: 'object'
+      required:
+        - source
+        - first_name
+        - last_name
+        - email
+      properties:
+        source:
+          type: string
+          example: CTM
+          description: 'Source/Aggregator shortcode - i.e., `CTM` (Compare the Market), `QZ` (QuoteZone) etc.'
+        affiliate_quote_id:
+          type: string
+          description: Affiliate Quote ID Reference.
+
+        # Policy details
+        start_date:
+          type: string
+          default: today
+          example: '2025-01-01'
+          description: Policy start date in the format 'YYYY-MM-DD'.
+        term:
+          type: integer
+          default: 12
+          description: Policy term in months, or 0 for monthly cover.
+
+        # Customer details
+        email:
+          type: string
+          example: johndoe@email.com
+          description: Customers email address.
+        title:
+          type: string
+          example: MR
+          description: 'Customer title - e.g., `MR`, `MRS`, `MISS`, `MS`, `DR`, `MX`.'
+        first_name:
+          type: string
+          example: John
+          description: Customers first name.
+        last_name:
+          type: string
+          example: Doe
+          description: Customers last name.
+        datebirth:
+          type: string
+          example: '1987-10-07'
+          description: Customers date of birth in the format `YYYY-MM-DD`.
+        phone_number:
+          type: string
+          example: '07780510828'
+          description: Customers phone number.
+        address1:
+          type: string
+          example: 'The Business Centre, Cardiff House'
+          description: Customers first line of address. When set, `city` and `postcode` is also required.
+        address2:
+          type: string
+          example: 'Priority Business Park'
+          description: Customers second line of address. If no second line, set to null or omit field from request body. When set, `address1`, `city` and `postcode` is also required.
+        city:
+          type: string
+          example: 'BARRY'
+          description: Customers city. When set, `address1` and `postcode` is also required.
+        postcode:
+          type: string
+          example: 'CF632AW'
+          description: Customers postcode. When set, `address1` and `city` is also required.
+
+        # Product flags
+        cover_level:
+          type: string
+          example: 'RETURN_TO_INVOICE'
+          description: GAP cover level - i.e., `COMBINED_RETURN_TO_INVOICE`, `RETURN_TO_INVOICE`, `RETURN_TO_VALUE`, `VEHICLE_REPLACEMENT`, `CONTRACT_HIRE`, `FINANCE_GAP`, use `null` or omit field to show all.
+        covers_outstanding_finance:
+          type: boolean
+          example: true
+          description: Set to `true` for gap prices that covers outstanding finance.
+        covers_fitted_extras:
+          type: boolean
+          example: true
+          description: Set to `true` for gap prices that covers fitted extras.
+        covers_named_drivers:
+          type: boolean
+          example: true
+          description: Set to `true` for gap prices that covers named drivers.
+        covers_theft_with_use_of_keys:
+          type: boolean
+          example: true
+          description: Set to `true` for gap prices that covers theft with use of keys.
+
+        # Vehicles
+        vehicles:
+          type: array
+          description: 'List of vehicles. NOTE: Currently, only one vehicle is supported per request.'
+          items:
+            $ref: '#/components/schemas/GapVehicle'
+
+    GapPricingResponse:
+      type: 'object'
+      properties:
+        deeplink:
+          type: string
+          example: 'https://myaccount.dynamocover.com/quote/gap/d668f522-4b86-4470-bf4d-9173e802ef4d'
+        name:
+          type: string
+          example: Dynamo GAP PPOV
+        price:
+          type: number
+          example: 107.00
+        discount:
+          type: number
+          example: 10.28
+          description: Introductory offer applied for the first year.
+        monthly_price:
+          type: number
+          example: 10.70
+        monthly_discount:
+          type: number
+          example: 1.03
+          description: Introductory offer applied for the first `monthly_discount_term` months.
+        excess:
+          type: number
+          example: 0.00
+        cover_term:
+          type: integer
+          example: 12
+          description: GAP cover term in months.
+        cover_level:
+          type: string
+          example: RETURN_TO_INVOICE
+        claim_limit:
+          type: number
+          example: 22500.00
+        covers_outstanding_finance:
+          type: boolean
+          example: true
+        covers_fitted_extras:
+          type: boolean
+          example: true
+        covers_named_drivers:
+          type: boolean
+          example: true
+        covers_theft_with_use_of_keys:
           type: boolean
           example: true
