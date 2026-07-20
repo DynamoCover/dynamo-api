@@ -899,7 +899,7 @@ components:
         cover_level:
           type: string
           example: 'RETURN_TO_INVOICE'
-          description: GAP cover type - i.e., `COMBINED_RETURN_TO_INVOICE`, `RETURN_TO_INVOICE`, `RETURN_TO_VALUE`, `VEHICLE_REPLACEMENT`, `CONTRACT_HIRE`, `FINANCE_GAP`, use `null` or omit field to show all.
+          description: GAP cover level - i.e., `COMBINED_RETURN_TO_INVOICE`, `RETURN_TO_INVOICE`, `RETURN_TO_VALUE`, `VEHICLE_REPLACEMENT`, `CONTRACT_HIRE`, `FINANCE_GAP`, use `null` or omit field to show all.
         covers_outstanding_finance:
           type: boolean
           example: true
